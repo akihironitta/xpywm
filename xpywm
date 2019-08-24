@@ -110,13 +110,18 @@ KEYBOARD_HANDLER = {
     'XF86AudioLowerVolume': {
         'modifier': X.NONE, 'function': 'audio_lower_volume'
     },
+    'XF86AudioMute': {
+        'modifier': X.NONE, 'function': 'toggle_mixer_mute'
+    },
     # for debugging
     'Delete': {'modifier': X.Mod1Mask | X.ControlMask, 'function': 'restart'},
     'equal': {'modifier': X.Mod1Mask | X.ControlMask, 'function': 'exit'},
 }
 
 KEYSYM_TBL = {
-    'XF86AudioRaiseVolume': 0x1008ff13, 'XF86AudioLowerVolume': 0x1008ff11
+    'XF86AudioRaiseVolume': 0x1008ff13,
+    'XF86AudioLowerVolume': 0x1008ff11,
+    'XF86AudioMute': 0x1008ff12
 }
 
 LAYOUT_OFFSET = 0
@@ -216,7 +221,7 @@ def get_mixer_level():
         return level
     else:
         return None
-
+    
 def set_mixer_level(level):
     """Configure the master playback volume of the default ALSA audio device.
     Volume must be specified between 0 and 100."""
@@ -235,6 +240,40 @@ def audio_lower_volume(delta=10):
     """Decrease the volume of the default mixer by DELTA."""
     debug('audio_lower_volume: %s', delta)
     audio_raise_volume(-delta)
+    
+def get_mixer_mute_status():
+    """Return the master playback mute status of the default ALSA audio device."""
+    output = subprocess.getoutput('amixer get Master')
+    m = re.search(r'\[(\w+)\]$', output)
+    if m:
+        status = m.group(1)
+        if status == 'on':
+            is_mute = False
+        elif status == 'off':
+            is_mute = True
+        debug('get_mixer_status -> %s', is_mute)
+        return is_mute
+    else:
+        return None
+
+def toggle_mixer_mute():
+    """Toggle mute volume of the default mixer by DELTA."""
+    debug('toggle_mixer_mute:')
+    is_mute = get_mixer_mute_status()
+    if is_mute:
+        audio_unmute_volume()
+    else:
+        audio_mute_volume()
+        
+def audio_mute_volume():
+    """Mute the volume of the default mixer."""
+    debug('audio_mute_volume:')
+    subprocess.getoutput(f'amixer set Master mute')
+    
+def audio_unmute_volume(delta=10):
+    """Unmute the volume of the default mixer."""
+    debug('audio_unmute_volume:')
+    subprocess.getoutput(f'amixer set Master unmute')
 
 def load_rcfile():
     """Load and execute the custom RC script in the home directory
