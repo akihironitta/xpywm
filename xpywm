@@ -204,8 +204,8 @@ def xrandr_enable_external_output():
     if m:
         output = m.group(1)
         # NOTE: some LCD projectors fails to recognize without turning off
-        os.system(f'xrandr --output {output} --off')
-        os.system(f'xrandr --output {output} --mode 800x600 --rate 56.25')
+        subprocess.getoutput(f'xrandr --output {output} --off')
+        subprocess.getoutput(f'xrandr --output {output} --mode 800x600 --rate 56.25')
         return
 
 def get_mixer_level():
@@ -852,7 +852,7 @@ class WindowManager():
             else:
                 error("unable to call '%s'", entry['function'])
         elif 'command' in entry:
-            os.system(entry['command'])
+            subprocess.getoutput(entry['command'])
 
     def handle_button_press(self, event):
         """Initiate window repositioning with the button 1 or window resizing
