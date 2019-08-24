@@ -223,6 +223,8 @@ def get_mixer_level():
 def set_mixer_level(level):
     """Configure the master playback volume of the default ALSA audio device.
     Volume must be specified between 0 and 100."""
+    is_mute = get_mixer_mute_status()
+    audio_unmute_volume() if is_mute else None
     debug('set_mixer_level: %d', level)
     subprocess.getoutput(f'amixer set Master {level}%')
 
