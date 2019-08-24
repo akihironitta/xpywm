@@ -206,7 +206,7 @@ def xrandr_enable_external_output():
         output = m.group(1)
         # NOTE: some LCD projectors fails to recognize without turning off
         subprocess.getoutput(f'xrandr --output {output} --off')
-        subprocess.getoutput(f'xrandr --output {output} --mode 800x600 --rate 56.25')
+        subprocess.getoutput(f'xrandr --output {output} --auto --panning 2560x1440 --scale 1.33x1.33 --same-as eDP-1')
         return
 
 def get_mixer_level():
