@@ -99,8 +99,8 @@ KEYBOARD_HANDLER = {
     'F2': {'modifier': X.Mod1Mask, 'method': 'select_vscreen', 'args': 1},
     'F3': {'modifier': X.Mod1Mask, 'method': 'select_vscreen', 'args': 2},
     'F4': {'modifier': X.Mod1Mask, 'method': 'select_vscreen', 'args': 3},
-    'F7': {
-        'modifier': X.ShiftMask, 'function': 'xrandr_enable_external_output'
+    'XF86Display': {
+        'modifier': X.NONE, 'function': 'xrandr_enable_external_output'
     },
     'XF86AudioRaiseVolume': {
         'modifier': X.NONE, 'function': 'audio_raise_volume'
@@ -119,7 +119,8 @@ KEYBOARD_HANDLER = {
 KEYSYM_TBL = {
     'XF86AudioRaiseVolume': 0x1008ff13,
     'XF86AudioLowerVolume': 0x1008ff11,
-    'XF86AudioMute': 0x1008ff12
+    'XF86AudioMute': 0x1008ff12,
+    'XF86Display': 0x1008ff59
 }
 
 LAYOUT_OFFSET = 0
