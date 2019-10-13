@@ -102,6 +102,12 @@ KEYBOARD_HANDLER = {
     'XF86Display': {
         'modifier': X.NONE, 'function': 'xrandr_enable_external_output'
     },
+    'XF86MonBrightnessUp': {
+        'modifier': X.NONE, 'function': 'monitor_raise_brightness'
+    },
+    'XF86MonBrightnessDown': {
+        'modifier': X.NONE, 'function': 'monitor_lower_brightness'
+    },
     'XF86AudioRaiseVolume': {
         'modifier': X.NONE, 'function': 'audio_raise_volume'
     },
@@ -117,6 +123,8 @@ KEYBOARD_HANDLER = {
 }
 
 KEYSYM_TBL = {
+    'XF86MonBrightnessUp': 0x1008ff02,
+    'XF86MonBrightnessDown': 0x1008ff03,
     'XF86AudioRaiseVolume': 0x1008ff13,
     'XF86AudioLowerVolume': 0x1008ff11,
     'XF86AudioMute': 0x1008ff12,
@@ -229,6 +237,16 @@ def set_mixer_level(level):
     debug('set_mixer_level: %d', level)
     subprocess.getoutput(f'amixer set Master {level}%')
 
+def monitor_raise_brightness(delta=50):
+    """Increase the volume of the default mixer by DELTA."""
+    debug('monitor_raise_brightness: %s', delta)
+    output = subprocess.getoutput(f'pylight -inc {delta}')
+
+def monitor_lower_brightness(delta=50):
+    """Decrease the volume of the default mixer by DELTA."""
+    debug('monitor_lower_brightness: %s', delta)
+    output = subprocess.getoutput(f'pylight -dec {delta}')
+    
 def audio_raise_volume(delta=10):
     """Increase the volume of the default mixer by DELTA."""
     debug('audio_raise_volume: %s', delta)
