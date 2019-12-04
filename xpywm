@@ -237,12 +237,12 @@ def set_mixer_level(level):
     debug('set_mixer_level: %d', level)
     subprocess.getoutput(f'amixer set Master {level}%')
 
-def monitor_raise_brightness(delta=50):
+def monitor_raise_brightness(delta=100):
     """Increase the volume of the default mixer by DELTA."""
     debug('monitor_raise_brightness: %s', delta)
     output = subprocess.getoutput(f'pylight -inc {delta}')
 
-def monitor_lower_brightness(delta=50):
+def monitor_lower_brightness(delta=100):
     """Decrease the volume of the default mixer by DELTA."""
     debug('monitor_lower_brightness: %s', delta)
     output = subprocess.getoutput(f'pylight -dec {delta}')
