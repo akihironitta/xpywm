@@ -39,6 +39,7 @@ DRAG_MAX_FPS = 10
 MIN_WIN_SIZE = 16
 BOUNCE_RATIO = 1 / 8
 MAX_VSCREEN = 3
+SCREENSHOT_DIR = '/tmp'
 
 EVENT_HANDLER = {
     X.KeyPress: 'handle_keypress',
@@ -93,11 +94,11 @@ KEYBOARD_HANDLER = {
     },
     '3': {
         'modifier': X.Mod1Mask | X.ControlMask, 'command':
-        'import -window root /tmp/$(date +%Y%m%d-%H%M%S).png &'
+        f'import -window root {SCREENSHOT_DIR}/$(date +%Y%m%d-%H%M%S).png &'
     },
     '4': {
         'modifier': X.Mod1Mask | X.ControlMask, 'command':
-        'import /tmp/$(date +%Y%m%d-%H%M%S).png &'
+        f'import {SCREENSHOT_DIR}/$(date +%Y%m%d-%H%M%S).png &'
     },
     'F1': {'modifier': X.Mod1Mask, 'method': 'select_vscreen', 'args': 0},
     'F2': {'modifier': X.Mod1Mask, 'method': 'select_vscreen', 'args': 1},
