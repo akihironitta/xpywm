@@ -93,7 +93,11 @@ KEYBOARD_HANDLER = {
     },
     '3': {
         'modifier': X.Mod1Mask | X.ControlMask, 'command':
-        'xwd > /tmp/screenshot.xwd && convert /tmp/screenshot.xwd /tmp/$(date +%Y%m%d-%H%M%S).png &'
+        'import -window root /tmp/$(date +%Y%m%d-%H%M%S).png &'
+    },
+    '4': {
+        'modifier': X.Mod1Mask | X.ControlMask, 'command':
+        'import /tmp/$(date +%Y%m%d-%H%M%S).png &'
     },
     'F1': {'modifier': X.Mod1Mask, 'method': 'select_vscreen', 'args': 0},
     'F2': {'modifier': X.Mod1Mask, 'method': 'select_vscreen', 'args': 1},
